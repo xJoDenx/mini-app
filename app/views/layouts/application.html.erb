@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>MiniApp</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+    <nav class="header">
+      <div class="nav-wrapper orange lighten-1">
+        <a href="/" class="center brand-logo"><i class="material-icons">local_florist</i>PicBlog</a>
+        <% if user_signed_in? %>
+          <ul id="nav-mobile" class="right hide-on-med-and-down">
+            <a class='dropdown-trigger btn orange darken-2' href='#' data-target='dropdown1'><%= current_user.name %></a>
+            <ul id='dropdown1' class='dropdown-content'>
+              <li><a href="/users/<%= current_user.id %>">マイページ</a></li>
+              <li><%= link_to "ログアウト", destroy_user_session_path, method: :delete %></li>
+            </ul>
+            <li><a class="btn orange darken-2" href="/tweets/new"><i class="material-icons">create</i></a></li>
+          </ul>
+          </div>
+        <% else %>
+          <ul id="nav-mobile" class="right hide-on-med-and-down">
+            <span class="btn orange darken-2"><li><%= link_to "ログイン", new_user_session_path, class: 'post' %></li></span>
+            <span class="btn orange darken-2"><li><%= link_to "新規登録", new_user_registration_path, class: 'post' %></li></span>
+          </ul>
+        <% end %>
+      </div>
+    </nav>
+    <%= yield %>
+    <footer class="page-footer orange lighten-1">
+      <div class="footer-copyright">
+        <div class="container center">
+        © 2019 Copyright Text
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
+
+

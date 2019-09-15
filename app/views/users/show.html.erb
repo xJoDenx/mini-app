@@ -1,0 +1,28 @@
+<div class="row">
+  <h4 class="center"><%= @name %>さんの投稿一覧</h4>
+  <div class="col s6 offset-s3">
+    <% @tweets.each do |tweet| %>
+      <div class="card orange lighten-4">
+        <div class="card-image">
+          <img src="<%= tweet.image %>">
+            <span class="card-title"><a href="/tweets/<%= tweet.id %>" class="white-text"><%= tweet.title %></a></span>
+            <% if user_signed_in? && current_user.id == tweet.user_id %>
+              <div class="btn-floating halfway-fab waves-effect waves-light red dropdown-trigger btn" data-target='dropdown2'><i class="material-icons">add</i>
+                <ul id='dropdown2' class='dropdown-content'>
+                  <li><a href="/tweets/<%= tweet.id %>/edit"><i class="material-icons">edit</i></a><%= link_to '編集', "/tweets/#{tweet.id}/edit", method: :get %></li>
+                  <li><a rel="nofollow" data-method="delete" href="/tweets/<%= tweet.id %>"><i class="material-icons">delete_foever</i></a><%= link_to '削除', "/tweets/#{tweet.id}", method: :delete %></li>
+                </ul>
+              </div>
+            <% end %>
+        </div>
+        <div class="card-action">
+          <a href="/users/<%= tweet.user.id %>" class= "brown-text">投稿者:<%= tweet.user.name %></a>
+          <p class="right"><%= tweet.created_at.strftime("%Y/%m/%d %H:%M") %></p>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+<div class="center orange lighten-2">
+  <%= paginate(@tweets) %>
+</div>
